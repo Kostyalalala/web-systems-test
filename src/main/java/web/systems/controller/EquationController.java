@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import web.systems.dto.EquationDTO;
 import web.systems.entity.EquationEntity;
 import web.systems.service.EquationService;
 
@@ -25,8 +26,8 @@ public class EquationController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addEmployee(@ModelAttribute(value = "equation") EquationEntity equation, BindingResult result) {
-        equationService.getRoot(equation.getA(), equation.getB(), equation.getC());
+    public String addEmployee(@ModelAttribute(value = "equation") EquationDTO equation, BindingResult result) {
+        equationService.getRoot(equation);
         return "redirect:/";
     }
 

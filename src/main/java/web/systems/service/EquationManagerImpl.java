@@ -15,8 +15,8 @@ public class EquationManagerImpl implements EquationManager {
 
     @Override
     @Transactional
-    public void addEmployee(EquationEntity employee) {
-        employeeDAO.addEmployee(employee);
+    public void addEquation(EquationEntity equationEntity) {
+        employeeDAO.addEmployee(equationEntity);
     }
 
     public void setEmployeeDAO(EquationDAO employeeDAO) {

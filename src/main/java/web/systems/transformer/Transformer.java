@@ -4,7 +4,7 @@ import web.systems.dto.EquationDTO;
 import web.systems.entity.EquationEntity;
 
 public class Transformer {
-    public static EquationEntity transformToEquation(Double a, Double b, Double c) {
+    public static EquationEntity TRANSFORM_TO_EQUATION(Double a, Double b, Double c) {
         EquationEntity equation = new EquationEntity();
         equation.setA(a);
         equation.setB(b);
@@ -13,7 +13,7 @@ public class Transformer {
         return equation;
     }
 
-    public static EquationDTO transformToDTO(EquationEntity equationEntity) {
+    public static EquationDTO TRANSFORM_TO_DTO(EquationEntity equationEntity) {
         EquationDTO equationDTO = new EquationDTO();
         equationDTO.setA(equationEntity.getA());
         equationDTO.setB(equationEntity.getB());
@@ -24,7 +24,7 @@ public class Transformer {
         return equationDTO;
     }
 
-    public static EquationEntity transformToEntity(EquationDTO equationDTO) {
+    public static EquationEntity TRANSFORM_TO_ENTITY(EquationDTO equationDTO) {
         EquationEntity equationEntity = new EquationEntity();
         equationEntity.setA(equationDTO.getA());
         equationEntity.setB(equationDTO.getB());

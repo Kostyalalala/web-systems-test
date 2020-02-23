@@ -1,11 +1,11 @@
 package web.systems.service;
 
-import static web.systems.transformer.Transformer.transformToEquation;
+import static web.systems.transformer.Transformer.TRANSFORM_TO_ENTITY;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import web.systems.entity.EquationEntity;
+import web.systems.dto.EquationDTO;
 
 @Service
 public class EquationService {
@@ -13,11 +13,12 @@ public class EquationService {
     @Autowired
     private EquationManager equationManager;
 
-    public String getRoot(Double a, Double b, Double c) {
-        EquationEntity equation = transformToEquation(a, b, c);
-        Double determinant = getDeterminant(a, b, c);
+    public String getRoot(EquationDTO equation) {
+        Double determinant = getDeterminant(equation.getA(), equation.getB(), equation.getC());
         equation.setDeterminant(determinant);
 
+        Double a = equation.getA();
+        Double b = equation.getB();
         if (determinant > 0) {
             equation.setFirstRoot((-b + Math.sqrt(determinant)) / (2 * a));
             equation.setSecondRoot((-b - Math.sqrt(determinant)) / (2 * a));
@@ -33,7 +34,7 @@ public class EquationService {
         else {
             System.out.format("There is no roots for this equation");
         }
-        equationManager.addEmployee(equation);
+        equationManager.addEquation(TRANSFORM_TO_ENTITY(equation));
         return createEquationString(equation);
     }
 
@@ -41,12 +42,12 @@ public class EquationService {
         return b * b - 4 * a * c;
     }
 
-    private String createEquationString(EquationEntity equation) {
+    private String createEquationString(EquationDTO equation) {
         return String.format("%fx + %fx + %f = 0\n%s", equation.getA(), equation.getB(), equation.getC(),
                              createRootsString(equation));
     }
 
-    private String createRootsString(EquationEntity equation) {
+    private String createRootsString(EquationDTO equation) {
         return (equation.getFirstRoot() == null) ? "There is no roots for this equation"
                 : String.format("Root1 = %f, Root2 = %f", equation.getFirstRoot(), equation.getSecondRoot());
     }
