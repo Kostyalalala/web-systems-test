@@ -9,28 +9,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import web.systems.entity.EquationEntity;
-import web.systems.service.EquationManager;
+import web.systems.service.EquationService;
 
 @Controller
 public class EquationController {
 
     @Autowired
-    private EquationManager employeeManager;
+    private EquationService equationService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String listEmployees(ModelMap map) {
-        map.addAttribute("employee", new EquationEntity());
+        map.addAttribute("equation", new EquationEntity());
 
-        return "editEmployeeList";
+        return "equation";
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addEmployee(@ModelAttribute(value = "employee") EquationEntity employee, BindingResult result) {
-        employeeManager.addEmployee(employee);
+    public String addEmployee(@ModelAttribute(value = "equation") EquationEntity equation, BindingResult result) {
+        equationService.getRoot(equation.getA(), equation.getB(), equation.getC());
         return "redirect:/";
     }
 
-    public void setEmployeeManager(EquationManager employeeManager) {
-        this.employeeManager = employeeManager;
+    public void setEquationService(EquationService equationService) {
+        this.equationService = equationService;
     }
 }

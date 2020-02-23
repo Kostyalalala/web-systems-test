@@ -1,22 +1,20 @@
 package web.systems.service;
 
+import static web.systems.transformer.Transformer.transformToEquation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.systems.entity.EquationEntity;
-import web.systems.transformer.Transformer;
-
 
 @Service
 public class EquationService {
-    @Autowired
-    private Transformer transformer;
 
-    // @Autowired
-    // private EquationRepository equationRepository;
+    @Autowired
+    private EquationManager equationManager;
 
     public String getRoot(Double a, Double b, Double c) {
-        EquationEntity equation = transformer.transformToEquation(a, b, c);
+        EquationEntity equation = transformToEquation(a, b, c);
         Double determinant = getDeterminant(a, b, c);
         equation.setDeterminant(determinant);
 
@@ -35,7 +33,7 @@ public class EquationService {
         else {
             System.out.format("There is no roots for this equation");
         }
-        // equationRepository.save(equation);
+        equationManager.addEmployee(equation);
         return createEquationString(equation);
     }
 
@@ -51,6 +49,10 @@ public class EquationService {
     private String createRootsString(EquationEntity equation) {
         return (equation.getFirstRoot() == null) ? "There is no roots for this equation"
                 : String.format("Root1 = %f, Root2 = %f", equation.getFirstRoot(), equation.getSecondRoot());
+    }
+
+    public void setEquationManager(EquationManager equationManager) {
+        this.equationManager = equationManager;
     }
 
 }
