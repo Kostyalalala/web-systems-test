@@ -1,11 +1,11 @@
-package web.systems.engine.service;
+package web.systems.engine.db.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import web.systems.engine.DB.dao.EquationDAO;
-import web.systems.engine.DB.entity.EquationEntity;
+import web.systems.engine.db.dao.EquationDAO;
+import web.systems.engine.db.entity.EquationEntity;
 
 @Service
 public class EquationManagerImpl implements EquationManager {
@@ -17,9 +17,5 @@ public class EquationManagerImpl implements EquationManager {
     @Transactional
     public void addEquation(EquationEntity equationEntity) {
         equationDAO.addEquation(equationEntity);
-    }
-
-    public void setEmployeeDAO(EquationDAO equationDAO) {
-        this.equationDAO = equationDAO;
     }
 }

@@ -8,30 +8,26 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import web.systems.engine.DB.entity.EquationEntity;
 import web.systems.engine.dto.EquationDTO;
 import web.systems.engine.service.EquationService;
 
 @Controller
 public class EquationController {
 
+    private static final String EQUATION = "equation";
     @Autowired
     private EquationService equationService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String listEmployees(ModelMap map) {
-        map.addAttribute("equation", new EquationEntity());
+        map.addAttribute(EQUATION, EquationDTO.builder().build());
 
-        return "equation";
+        return EQUATION;
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public String addEmployee(@ModelAttribute(value = "equation") EquationDTO equation, BindingResult result) {
+    public String addEmployee(@ModelAttribute(value = EQUATION) EquationDTO equation, BindingResult result) {
         equationService.getRoot(equation);
         return "redirect:/";
-    }
-
-    public void setEquationService(EquationService equationService) {
-        this.equationService = equationService;
     }
 }

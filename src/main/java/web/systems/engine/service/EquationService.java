@@ -5,10 +5,17 @@ import static web.systems.engine.dto.Transformer.TRANSFORM_TO_ENTITY;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import web.systems.engine.db.service.EquationManager;
 import web.systems.engine.dto.EquationDTO;
 
 @Service
 public class EquationService {
+
+    private static final int TWO = 2;
+    private static final int ZERO = 0;
+    private static final String EQUATION_MESSAGE = "%fx + %fx + %f = 0\n%s";
+    private static final String ROOTS_MESSAGE = "Root1 = %f, Root2 = %f";
+    private static final String NO_ROOTS_MESSAGE = "There is no roots for this equation";
 
     @Autowired
     private EquationManager equationManager;
@@ -19,21 +26,25 @@ public class EquationService {
 
         Double a = equation.getA();
         Double b = equation.getB();
-        if (determinant > 0) {
-            equation.setFirstRoot((-b + Math.sqrt(determinant)) / (2 * a));
-            equation.setSecondRoot((-b - Math.sqrt(determinant)) / (2 * a));
+
+        Double firstRoot = null;
+        Double secondRoot = null;
+
+        if (determinant > ZERO) {
+            firstRoot = (-b + Math.sqrt(determinant)) / (TWO * a);
+            secondRoot = (-b - Math.sqrt(determinant)) / (TWO * a);
         }
         // Condition for real and equal roots
-        else if (determinant == 0) {
-
-            Double root = -b / (2 * a);
-            equation.setFirstRoot(root);
-            equation.setSecondRoot(root);
+        else if (determinant == ZERO) {
+            firstRoot = secondRoot = -b / (TWO * a);
         }
         // If roots are not real
         else {
-            System.out.format("There is no roots for this equation");
+            System.out.format(NO_ROOTS_MESSAGE);
         }
+        equation.setFirstRoot(firstRoot);
+        equation.setSecondRoot(secondRoot);
+        
         equationManager.addEquation(TRANSFORM_TO_ENTITY(equation));
         return createEquationString(equation);
     }
@@ -43,17 +54,13 @@ public class EquationService {
     }
 
     private String createEquationString(EquationDTO equation) {
-        return String.format("%fx + %fx + %f = 0\n%s", equation.getA(), equation.getB(), equation.getC(),
+        return String.format(EQUATION_MESSAGE, equation.getA(), equation.getB(), equation.getC(),
                              createRootsString(equation));
     }
 
     private String createRootsString(EquationDTO equation) {
-        return (equation.getFirstRoot() == null) ? "There is no roots for this equation"
-                : String.format("Root1 = %f, Root2 = %f", equation.getFirstRoot(), equation.getSecondRoot());
-    }
-
-    public void setEquationManager(EquationManager equationManager) {
-        this.equationManager = equationManager;
+        return (equation.getFirstRoot() == null) ? NO_ROOTS_MESSAGE
+                : String.format(ROOTS_MESSAGE, equation.getFirstRoot(), equation.getSecondRoot());
     }
 
 }
