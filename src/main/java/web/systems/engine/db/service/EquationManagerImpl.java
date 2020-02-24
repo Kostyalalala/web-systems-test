@@ -18,4 +18,11 @@ public class EquationManagerImpl implements EquationManager {
     public void addEquation(EquationEntity equationEntity) {
         equationDAO.addEquation(equationEntity);
     }
+
+    @Override
+    @Transactional
+    public EquationEntity getById(Integer id) {
+        EquationEntity equationEntity = equationDAO.getById(id);
+        return equationEntity;
+    }
 }

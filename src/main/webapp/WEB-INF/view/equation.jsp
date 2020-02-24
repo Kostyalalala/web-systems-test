@@ -7,7 +7,7 @@
 </head>
 <body>
 
-	<h2>Employee Management Screen</h2>
+	<h2>Equation</h2>
 
 	<form:form method="post" action="add" commandName="equation">
 
@@ -36,6 +36,5 @@
 			</tr>
 		</table>
 	</form:form>
-
 </body>
 </html>

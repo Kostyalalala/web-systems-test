@@ -4,4 +4,7 @@ import web.systems.engine.db.entity.EquationEntity;
 
 public interface EquationDAO {
     public void addEquation(EquationEntity equationEntity);
+
+    public EquationEntity getById(Integer id);
+
 }

@@ -15,5 +15,11 @@ public class EquationDaoImpl implements EquationDAO {
     @Override
     public void addEquation(EquationEntity equationEntity) {
         this.sessionFactory.getCurrentSession().save(equationEntity);
+        this.sessionFactory.getCurrentSession().flush();
+    }
+
+    @Override
+    public EquationEntity getById(Integer id) {
+        return (EquationEntity) sessionFactory.getCurrentSession().load(EquationEntity.class, id);
     }
 }

@@ -6,13 +6,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Proxy;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
 @Entity
 @Table(name = "equations")
+@NoArgsConstructor
+@AllArgsConstructor
+@Proxy(lazy = false)
 public class EquationEntity {
 
     @Id
