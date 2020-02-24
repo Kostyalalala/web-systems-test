@@ -61,9 +61,12 @@
 		</property>
 	</bean>
 
-	<bean id="equationDAO" class="web.systems.engine.db.dao.EquationDaoImpl"></bean>
+	<bean id="equationDAO"
+		class="web.systems.engine.db.dao.EquationDaoImpl"></bean>
 	<bean id="equationService"
 		class="web.systems.engine.service.EquationService"></bean>
+	<bean id="equationResultService"
+		class="web.systems.engine.service.EquationResultService"></bean>
 	<bean id="equationManager"
 		class="web.systems.engine.db.service.EquationManagerImpl"></bean>
 
